@@ -47,7 +47,7 @@ The virtual machine, as seen by a normal user, is illustrated in Fig. A-1. Key s
 - **Programming Characteristics**: With this simple machine, a batch of compute-bound, IO-bound, and balanced programs can be quickly written. The design intentionally allows for common programming errors, providing versatility in handling a variety of jobs and user errors.
 
 <!-- Insert an image or diagram (if available) illustrating the virtual machine -->
-![Instruction Set](assets/Instruction%20set.png)
+![Instruction Set](assets/virtual user20% machine.png)
 
 
 ### b) The Real Machine
