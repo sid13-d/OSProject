@@ -40,3 +40,27 @@ This project is licensed under the [MIT License](LICENSE.md) - see the [LICENSE.
 
 Special thanks to Shaw and Weiderman for their foundational work in this field.
 
+# Machine Specifications
+
+## The MOS Computer
+
+The MOS computer is described from two perspectives: the "virtual" machine seen by the typical user and the "real" machine used by the MOS designer/implementer.
+
+### a) The Virtual Machine
+
+The virtual machine, as seen by a normal user, is illustrated in Fig. A-1. Key specifications include:
+
+- **Storage**: Consists of a maximum of 100 words, addressed from 00 to 99. Each word is divided into four one-byte units, where a byte may contain any character acceptable by the host machine.
+
+- **CPU Registers**:
+  - **General Register (R)**: A four-byte general register.
+  - **Boolean Toggle (C)**: A one-byte toggle that may contain either 'T' (true) or 'F' (false).
+  - **Instruction Counter (IC)**: A two-byte instruction counter.
+
+<!-- Insert an image or diagram (if available) illustrating the virtual machine -->
+
+### b) The Real Machine
+
+The "real" machine used by the MOS designer/implementer may have additional specifications beyond the user's view. These details are typically outlined in technical documentation provided for developers working on the MOS.
+
+<!-- Include any additional details about the real machine used by the MOS designer/implementer -->
