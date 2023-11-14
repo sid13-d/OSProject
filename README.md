@@ -41,23 +41,38 @@ The virtual machine, as seen by a normal user, is illustrated in Fig. A-1. Key s
 - **Instruction Format**: Table A-I gives the format and interpretation of each instruction. Notable instructions include:
   - **GD (Input)**: Reads only the first 40 columns of a card.
   - **PD (Output)**: Prints a new line of 40 characters.
-
+  
 - **Program Initialization**: The first instruction of a program must always appear in location 00.
 
 - **Programming Characteristics**: With this simple machine, a batch of compute-bound, IO-bound, and balanced programs can be quickly written. The design intentionally allows for common programming errors, providing versatility in handling a variety of jobs and user errors.
 
-<!-- Insert an image or diagram (if available) illustrating the virtual machine -->
-![Virtual User Machine](assets/virtual%20user%20machine.png)
+- **Supervisor Storage**: Loosely defined as the amount of storage required for the MOS.
 
-
+<!-- Insert an image or diagram illustrating the virtual machine -->
+![Instruction Set](assets/Instruction%20set.png)
 
 ### b) The Real Machine
 
 The "real" machine used by the MOS designer/implementer may have additional specifications beyond the user's view. These details are typically outlined in technical documentation provided for developers working on the MOS.
 
-<!-- Include any additional details about the real machine used by the MOS designer/implementer -->
-<!-- Insert an image or diagram illustrating the virtual machine -->
-![Instruction Set](assets/Instruction%20set.png)
+- **CPU Registers of Interest**:
+  - **Boolean Toggle (C)**: A one-byte "Boolean" toggle.
+  - **General Register (R)**: A four-byte general register.
+  - **Instruction Counter (IC)**: A two-byte virtual machine location counter.
+  - **Interrupt Registers**:
+    - **Program Interrupt (PI)**
+    - **System Interrupt (SI)**
+    - **Timer Interrupt (TI)**
+  - **Page Table Register (PTR)**: A four-byte page table register.
+  - **Mode (MODE)**: Mode of CPU, either 'master' or 'slave'.
+  
+- **Storage**:
+  - **User Storage**: Contains 300 four-byte words, addressed from 000 to 299. Divided into 30 ten-word blocks for paging purposes.
+  - **Supervisor Storage**: Loosely defined as the amount of storage required for the MOS.
+
+<!-- Insert an image or diagram illustrating the real machine -->
+![Virtual User Machine](assets/virtual%20user%20machine.png)
+
 
 ## Getting Started
 
