@@ -19,6 +19,42 @@ We assume that the project will be coded for a large central computer facility (
 
 The global strategy is to simulate the hypothetical computer on the host and write the MOS for this simulated machine. The MOS and simulator are anticipated to consist of approximately 1000 to 1200 program cards, with the majority of the code representing the MOS. The project timeline is designed for completion over about two months, suitable for students concurrently taking a normal academic load.
 
+# Machine Specifications
+
+## The MOS Computer
+
+The MOS computer is described from two perspectives: the "virtual" machine seen by the typical user and the "real" machine used by the MOS designer/implementer.
+
+### a) The Virtual Machine
+
+The virtual machine, as seen by a normal user, is illustrated in Fig. A-1. Key specifications include:
+
+- **Storage**: Consists of a maximum of 100 words, addressed from 00 to 99. Each word is divided into four one-byte units, where a byte may contain any character acceptable by the host machine.
+
+- **CPU Registers**:
+  - **General Register (R)**: A four-byte general register.
+  - **Boolean Toggle (C)**: A one-byte toggle that may contain either 'T' (true) or 'F' (false).
+  - **Instruction Counter (IC)**: A two-byte instruction counter.
+
+- **Word Interpretation**: A storage word may be interpreted as an instruction or data word. The operation code of an instruction occupies the two high-order bytes of the word, and the operand address appears in the two low-order bytes.
+
+- **Instruction Format**: Table A-I gives the format and interpretation of each instruction. Notable instructions include:
+  - **GD (Input)**: Reads only the first 40 columns of a card.
+  - **PD (Output)**: Prints a new line of 40 characters.
+
+- **Program Initialization**: The first instruction of a program must always appear in location 00.
+
+- **Programming Characteristics**: With this simple machine, a batch of compute-bound, IO-bound, and balanced programs can be quickly written. The design intentionally allows for common programming errors, providing versatility in handling a variety of jobs and user errors.
+
+<!-- Insert an image or diagram (if available) illustrating the virtual machine -->
+
+### b) The Real Machine
+
+The "real" machine used by the MOS designer/implementer may have additional specifications beyond the user's view. These details are typically outlined in technical documentation provided for developers working on the MOS.
+
+<!-- Include any additional details about the real machine used by the MOS designer/implementer -->
+
+
 ## Getting Started
 
 Follow these steps to get started with the project:
@@ -40,27 +76,3 @@ This project is licensed under the [MIT License](LICENSE.md) - see the [LICENSE.
 
 Special thanks to Shaw and Weiderman for their foundational work in this field.
 
-# Machine Specifications
-
-## The MOS Computer
-
-The MOS computer is described from two perspectives: the "virtual" machine seen by the typical user and the "real" machine used by the MOS designer/implementer.
-
-### a) The Virtual Machine
-
-The virtual machine, as seen by a normal user, is illustrated in Fig. A-1. Key specifications include:
-
-- **Storage**: Consists of a maximum of 100 words, addressed from 00 to 99. Each word is divided into four one-byte units, where a byte may contain any character acceptable by the host machine.
-
-- **CPU Registers**:
-  - **General Register (R)**: A four-byte general register.
-  - **Boolean Toggle (C)**: A one-byte toggle that may contain either 'T' (true) or 'F' (false).
-  - **Instruction Counter (IC)**: A two-byte instruction counter.
-
-<!-- Insert an image or diagram (if available) illustrating the virtual machine -->
-
-### b) The Real Machine
-
-The "real" machine used by the MOS designer/implementer may have additional specifications beyond the user's view. These details are typically outlined in technical documentation provided for developers working on the MOS.
-
-<!-- Include any additional details about the real machine used by the MOS designer/implementer -->
