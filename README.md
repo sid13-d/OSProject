@@ -56,7 +56,8 @@ The virtual machine, as seen by a normal user, is illustrated in Fig. A-1. Key s
 The "real" machine used by the MOS designer/implementer may have additional specifications beyond the user's view. These details are typically outlined in technical documentation provided for developers working on the MOS.
 
 <!-- Include any additional details about the real machine used by the MOS designer/implementer -->
-
+<!-- Insert an image or diagram illustrating the virtual machine -->
+![Instruction Set](assets/Instruction%20set.png)
 
 ## Getting Started
 
