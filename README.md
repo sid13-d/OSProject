@@ -175,7 +175,7 @@ Feel free to adjust the example and the formatting based on your specific needs 
 - [Input File for Phase 1](assets/input_Phase1.pdf) - This file displays the jobs written for Phase 1.
 
 ### Output Files
-- [Output File for Phase 1](assets/output_Phase1.txt) - This file contains the output of the jobs written in Phase 1.
+- [Output File for Phase 1](assets/output_Phase1.pdf) - This file contains the output of the jobs written in Phase 1.
 
 ## Phase 2
 
