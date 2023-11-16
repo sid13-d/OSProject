@@ -164,6 +164,34 @@ $END0010005
 
 Feel free to adjust the example and the formatting based on your specific needs or preferences.
 
+# Multiprogramming Operating System Project
+
+## Phase 1
+
+### Algorithms
+- [Algorithm for Phase 1](assets/AOSPROJECT1.pdf) - This file contains the algorithms implemented for Phase 1.
+
+### Input Files
+- [Input File for Phase 1](assets/input_Phase1.pdf) - This file displays the jobs written for Phase 1.
+
+### Output Files
+- [Output File for Phase 1](assets/output_Phase1.txt) - This file contains the output of the jobs written in Phase 1.
+
+## Phase 2
+
+### Algorithms
+- [Algorithm for Phase 2](assets/AOSPROJECT2.pdf) - This file contains the algorithms implemented for Phase 2.
+
+### Input Files
+- [Input File for Phase 2](assets/input_phase2.txt) - This file displays the jobs written for Phase 2.
+
+### Output Files
+- [Output File for Phase 2](assets/output_phase2.txt) - This file contains the output of the jobs written in Phase 2.
+
+## Project Structure
+
+For detailed information about the project structure, design, and other documentation, please refer to the appropriate directories in this repository.
+
 
 ## Getting Started
 
