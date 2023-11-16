@@ -94,7 +94,7 @@ Three types of interrupts are possible:
 
 1. **Program Interrupts**:
    - **Protection (Page Table Length)**
-   - **Invalid Operation Code**
+   - **Invalid Operand Code**
    - **Page Fault (PI=1, P1=2, PI=3)**
 
 2. **Supervisor Interrupts**:
