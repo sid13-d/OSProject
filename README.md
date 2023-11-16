@@ -41,20 +41,128 @@ The virtual machine, as seen by a normal user, is illustrated in Fig. A-1. Key s
 - **Instruction Format**: Table A-I gives the format and interpretation of each instruction. Notable instructions include:
   - **GD (Input)**: Reads only the first 40 columns of a card.
   - **PD (Output)**: Prints a new line of 40 characters.
-
+  
 - **Program Initialization**: The first instruction of a program must always appear in location 00.
 
 - **Programming Characteristics**: With this simple machine, a batch of compute-bound, IO-bound, and balanced programs can be quickly written. The design intentionally allows for common programming errors, providing versatility in handling a variety of jobs and user errors.
 
-<!-- Insert an image or diagram (if available) illustrating the virtual machine -->
-![Instruction Set](assets/virtual user20% machine.png)
+- **Supervisor Storage**: Loosely defined as the amount of storage required for the MOS.
 
+<!-- Insert an image or diagram illustrating the virtual machine -->
+![Instruction Set](assets/Instruction%20set.png)
 
 ### b) The Real Machine
 
 The "real" machine used by the MOS designer/implementer may have additional specifications beyond the user's view. These details are typically outlined in technical documentation provided for developers working on the MOS.
 
-<!-- Include any additional details about the real machine used by the MOS designer/implementer -->
+- **CPU Registers of Interest**:
+  - **Boolean Toggle (C)**: A one-byte "Boolean" toggle.
+  - **General Register (R)**: A four-byte general register.
+  - **Instruction Counter (IC)**: A two-byte virtual machine location counter.
+  - **Interrupt Registers**:
+    - **Program Interrupt (PI)**
+    - **System Interrupt (SI)**
+    - **Timer Interrupt (TI)**
+  - **Page Table Register (PTR)**: A four-byte page table register.
+  - **Mode (MODE)**: Mode of CPU, either 'master' or 'slave'.
+  
+- **Storage**:
+  - **User Storage**: Contains 300 four-byte words, addressed from 000 to 299. Divided into 30 ten-word blocks for paging purposes.
+  - **Supervisor Storage**: Loosely defined as the amount of storage required for the MOS.
+
+<!-- Insert an image or diagram illustrating the real machine -->
+![Virtual User Machine](assets/virtual%20user%20machine.png)
+
+### c) Slave Mode Operation
+
+User storage addressing while in slave mode is accomplished through paging hardware. The PTR register contains the length and page table base location for the user process currently running. The four bytes a0 a1 a2, a3, in the PTR have this interpretation: a1 is the page table length minus 1, and l0a2, + a3, is the number of the user storage block in which the page table resides, where a1, a2, and a3 are digits.
+
+A two-digit instruction or operand address, x1 x2, in virtual space is mapped by the relocation hardware into the real user storage address:
+\[10 \times [10 \times (l0a2 + a3) + x1] + x2\]
+
+Where (α) means "the contents of address" and it is assumed that \(x1 \leq a1\).
+
+All pages of a process are required to be loaded into user storage prior to execution. It is assumed that each virtual machine instruction is emulated in one time unit. All interrupts occurring during slave mode operation are honored at the end of instruction cycles and cause a switch to master mode. The operations GD, PD, and H result in supervisor-type interrupt, that is, "supervisor calls." A program-type interrupt is triggered if the emulator receives an invalid operation code or if \(x1 > a1\) during the relocation map (invalid virtual space address).
+
+### d) Master Mode Operation and Interrupt Handling
+
+In master mode, the handling of interrupts is a crucial aspect of the MOS operation.
+
+#### Interrupts
+
+Three types of interrupts are possible:
+
+1. **Program Interrupts**:
+   - **Protection (Page Table Length)**
+   - **Invalid Operand Code**
+   - **Page Fault (PI=1, P1=2, PI=3)**
+
+2. **Supervisor Interrupts**:
+   - **GD (SI=1)**
+   - **PD (SI=2)**
+   - **H (SI=3)**
+
+3. **Timer Interrupts**:
+   - **Decrement to Zero (TI=2)**
+
+The events causing interrupts of types (1) and (2) can happen only in slave mode. Events of type 3 can occur in both master and slave modes, and several of these events may happen simultaneously. The interrupt-causing event is recorded in the interrupt registers regardless of whether the interrupts are inhibited (master mode) or enabled (slave mode).
+
+#### Handling of Interrupts
+
+The interrupt registers are set by an interrupt event to the following values:
+
+1. **Program Interrupt (PI)**:
+   - \(PI=1\): Opcode
+   - \(PI=2\): Invalid Operation Code
+   - \(PI=3\): Page Fault
+
+2. **Supervisor Interrupt (SI)**:
+   - \(SI=1\): GD
+   - \(SI=2\): PD
+   - \(SI=3\): H
+
+3. **Timer Interrupt (TI)**:
+   - \(TI=2\): Timer
+
+All interrupts occurring during slave mode operation are honored at the end of instruction cycles and cause a switch to master mode. The operations GD, PD, and H result in supervisor-type interrupts, that is, "supervisor calls." A program-type interrupt is triggered if the emulator receives an invalid operation code or if \(x1 > a1\) during the relocation map (invalid virtual space address).
+
+### e) JOB, PROGRAM, AND DATA CARD FORMATS
+
+A user job is submitted as a deck of control, program, and data cards in the order: `<JOB card>`, `<Program>`, `<DATA card>`, `<Data>`, `<ENDJOB card>`.
+
+1. **`<JOB card>` Format:**
+   - `$AMJ cc. 1-4`: A Multiprogramming Job
+   - `<job Id> cc. 5—8`: A unique 4-character job identifier.
+   - `<time estimate> cc. 9—12`: 4-digit maximum time estimate.
+   - `<line estimate> cc. 13—16`: 4-digit maximum output estimate.
+
+2. **`<Program>` Deck Format:**
+   - Each card of the `<Program>` deck contains information in card columns 1-40.
+   - The ith card contains the initial contents of user virtual memory locations: \(10 \times (i - 1), 10 \times (i - 1) + 1, \ldots, 10 \times (i - 1) + 9\), where \(i = 1, 2, \ldots, n\).
+   - Each word may contain a VM instruction or four bytes of data.
+   - The number of cards \(n\) in the program deck defines the size of the user space; i.e., \(n\) cards define \(10 \times n\) words, \(n \times 10\).
+
+3. **`<DATA card>` Format:**
+   - The `<DATA card>` has the format: The (Data) deck contains information in cc. 1—40 and is the user data retrieved by the VM GD instructions.
+
+4. **`<ENDJOB card>` Format:**
+   - The `<ENDJOB card>` has the format: `SEND cc. 1-4`.
+   - `<job Id> cc. 5—8`: Same `<job Id>` as `<JOB card>`.
+   - The `<DATA card>` is omitted if there are no `<Data>` cards in a job.
+
+### f) Example Job Submission:
+
+Here is an example of how a job can be submitted:
+
+plaintext
+$AMJ0010005001600
+... (Program cards)
+$DTA
+... (Data cards)
+$END0010005
+
+
+Feel free to adjust the example and the formatting based on your specific needs or preferences.
 
 
 ## Getting Started
